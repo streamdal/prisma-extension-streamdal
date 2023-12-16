@@ -1,20 +1,38 @@
 {
-  "name": "prisma-client-extension-starter",
+  "name": "prisma-extension-streamdal",
   "version": "0.0.0",
-  "author": "",
+  "author": "Jacob Heric",
   "description": "",
-  "keywords": ["prisma", "@prisma/client", "extension"],
+  "keywords": [
+    "prisma",
+    "@prisma/client",
+    "extension",
+    "streamdal",
+    "code native data pipelines"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint src --ext .ts --fix",
+    "prepare": "husky install"
   },
   "peerDependencies": {
-    "@prisma/client": "latest"
+    "@prisma/client": "latest",
+    "@streamdal/node-sdk": "latest"
   },
   "devDependencies": {
-    "@prisma/client": "latest",
-    "prisma": "latest",
-    "typescript": "4.9.4"
+    "@prisma/extension-accelerate": "^0.6.2",
+    "@prisma/client": "^5.7.0",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1",
+    "prisma": "^5.7.0",
+    "typescript": "5.3.3"
   }
 }
