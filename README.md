@@ -99,7 +99,14 @@ update
 updateMany
 ```
 
+For a working example, see the `example/index.ts`. To run the examples:
 
+```
+cd example
+npm install
+npx prisma db push
+npm run dev
+```
 
 
 
