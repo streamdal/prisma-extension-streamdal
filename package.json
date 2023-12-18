@@ -1,8 +1,8 @@
 {
-  "name": "prisma-extension-streamdal",
+  "name": "@streamdal/prisma-extension-streamdal",
   "version": "0.0.0",
   "author": "Jacob Heric",
-  "description": "",
+  "description": "Streamdal code native data pipelines for Prisma",
   "keywords": [
     "prisma",
     "@prisma/client",
@@ -10,6 +10,7 @@
     "streamdal",
     "code native data pipelines"
   ],
+  "license": "Apache",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
