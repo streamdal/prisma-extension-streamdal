@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { streamdal } from "../src";
 import { OperationType, StreamdalConfigs } from "@streamdal/node-sdk";
 import * as crypto from "crypto";
+import { streamdal } from "@streamdal/prisma-extension-streamdal";
 
 const streamdalConfigs: StreamdalConfigs = {
   streamdalUrl: "localhost:8082",
@@ -10,7 +10,7 @@ const streamdalConfigs: StreamdalConfigs = {
   pipelineTimeout: "100",
   stepTimeout: "10",
   dryRun: false,
-  quiet: true
+  quiet: true,
 };
 
 const consumerAudience = {
@@ -31,55 +31,56 @@ const prisma = new PrismaClient().$extends(streamdal(streamdalConfigs));
 
 const create = async () => {
   const ipAddress = "192.0.2.146";
-  console.log("inserting user with ipAddress unmasked", ipAddress)
+  console.log("inserting user with ipAddress unmasked", ipAddress);
   const result = await prisma.user.create({
     data: {
       email: `user.${crypto.randomUUID()}@streamdal.com`,
-      ipAddress
+      ipAddress,
     },
   });
 
   const user = await prisma.user.findFirst({ where: { id: result.id } });
   console.log("user with ipAddress after insert", user);
-}
+};
 
 const createWithPipeline = async () => {
   const ipAddress = "192.0.2.146";
-  console.log("inserting user with ipAddress masked", ipAddress)
+  console.log("inserting user with ipAddress masked", ipAddress);
   const result = await prisma.user.create({
     data: {
       email: `user.${crypto.randomUUID()}@streamdal.com`,
-      ipAddress: ipAddress
+      ipAddress: ipAddress,
     },
-    streamdalAudience: producerAudience
+    streamdalAudience: producerAudience,
   });
 
   const user = await prisma.user.findFirst({ where: { id: result.id } });
   console.log("user with ipAddress after insert", user);
-}
-
+};
 
 const findMany = async () => {
   console.log("fetching all users without masking email");
   const users = await prisma.user.findMany();
   console.log("users", users);
-}
+};
 
 const findManyWithPipeline = async () => {
   console.log("fetching all users and mask email");
-  const users = await prisma.user.findMany({ streamdalAudience: consumerAudience });
+  const users = await prisma.user.findMany({
+    streamdalAudience: consumerAudience,
+  });
   console.log("users", users);
-}
+};
 
 const example = () => {
   setInterval(() => {
     console.log("-----------------------");
-    // create();
+    create();
     createWithPipeline();
-    // findMany();
-    // findManyWithPipeline();
+    findMany();
+    findManyWithPipeline();
     console.log("-----------------------");
   }, 2000);
-}
+};
 
 example();
