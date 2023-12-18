@@ -4,7 +4,8 @@
     "dev": "ts-node --transpile-only index.ts"
   },
   "dependencies": {
-    "@prisma/client": "^5.7.0"
+    "@prisma/client": "^5.7.0",
+    "@streamdal/prisma-extension-streamdal": "latest"
   },
   "devDependencies": {
     "prisma": "^5.7.0",
