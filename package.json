@@ -1,6 +1,6 @@
 {
   "name": "@streamdal/prisma-extension-streamdal",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Jacob Heric",
   "description": "Streamdal code native data pipelines for Prisma",
   "keywords": [
