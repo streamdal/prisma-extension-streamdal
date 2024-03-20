@@ -19,9 +19,14 @@ Read more about Prisma client extensions here: [Prisma docs](https://www.prisma.
 
 ### Prerequisites
 
-Install the Streamdal console and server to manage your pipelines 
-and send your pipeline rules into the Prisma Streamdal extension:
-https://github.com/streamdal/streamdal?tab=readme-ov-file#getting-started
+You must have the Streamdal platform running. To bring it up locally, you can use docker compose:
+
+`docker compose up`
+
+Alternatively you can deploy it to your environment, see here for details:
+```
+https://github.com/streamdal/streamdal/tree/main/docs/install
+```
 
 
 ### Install
@@ -29,81 +34,63 @@ https://github.com/streamdal/streamdal?tab=readme-ov-file#getting-started
 npm install @streamdal/prisma-extension-streamdal
 ```
 
-### Setup
-Add the extension to your existing Prisma connection, pass it the necessary configs.
+### Configure
 
-```typescript
-const streamdalConfigs: StreamdalConfigs = {
-  streamdalUrl: "localhost:8082",
-  streamdalToken: "1234",
-  serviceName: "test-prisma-service",
-  pipelineTimeout: "100",
-  stepTimeout: "10",
-  dryRun: false,
-  quiet: true
-};
+You can configure the extension via env variables or code. The configuration
+variables you provide will point to the Streamdal platform you ran just above.
 
-const prisma = new PrismaClient().$extends(streamdal(streamdalConfigs));
-```
-
-### Use
-Pass a Streamdal Audience to any Prisma operation you want to run pipeline rules on. You 
-create pipeline rules and attach them to operations in the Streamdal console.
-
-The following assumes you've set up a pipeline in the console to detect and mask
-an ipaddress that you've attached this operation. See below for a screenshot of the 
-console.
-
-```typescript
-const consumerAudience = {
-  serviceName: "test-prisma-service",
-  componentName: "prisma",
-  operationType: OperationType.PRODUCER,
-  operationName: "prisma-user",
-};
-
-const createWithPipeline = async () => {
-  const result = await prisma.user.create({
-    data: {
-      email: `user.${crypto.randomUUID()}@streamdal.com`,
-      ipAddress: "192.0.2.146"
-    },
-    streamdalAudience: producerAudience
-  });
-
-  const user = await prisma.user.findFirst({ where: { id: result.id } });
-  console.log("user with ipAddress after insert", user);
-}
+If your app supports `.env` files, add the following there:
 
 ```
-That will output:
-```json
-{
-    id: 57,
-    email: 'user.6cae5579-6ec2-4f8e-9ebc-e3335b7e90cd@streamdal.com',
-    name: null,
-    ipAddress: '19*********'
-}
+STREAMDAL_URL="localhost:8082"
+STREAMDAL_TOKEN="1234"
+STREAMDAL_SERVICE_NAME="prisma-user-service"
+STREAMDAL_QUIET=true
 ```
 
-Streamdal pipelines can be used on the following Prisma operations:
+Or export them:
 
 ```
-create
-findFirst
-findFirstOrThrow
-findMany
-findUnique
-findUniqueOrThrow
-update
-updateMany
+export STREAMDAL_URL="localhost:8082"
+export STREAMDAL_TOKEN="1234"
+export STREAMDAL_SERVICE_NAME="prisma-user-service"
 ```
 
-For a working example, see the `example/index.ts`. To run the examples:
+Or via code: see and uncomment configuration code in the example app:
 
 ```
-cd example
+https://github.com/streamdal/streamdal-eamples/blob/main/prisma-extension/index.ts
+```
+
+Run your app as normal and all your Prisma operations will be mapped by 
+Streamdal automatically and you can view them and pipelines to them 
+in the Streamdal console at `http://localhost:8080` or wherever
+you installed it in the install step above.
+
+
+##### Run the Example App
+
+Clone the examples repository:
+
+```shell
+git clone git@github.com:streamdal/streamdal-examples.git
+```
+
+```shell
+cd streamdal/examples/prisma-extension
 npm install
 npx prisma db push
 npm run dev
 ```
+
+This will fire up the example app running the Streamdal Prisma Extension that inserts and fetches
+random users continuously. 
+
+Go to `http://localhost:8080` and you will see the above operations were automatically 
+instrumented and you are now able to create and add pipelines to them.
+
+![Console](./console-screenshot.png)
+
+
+
+
