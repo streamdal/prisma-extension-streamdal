@@ -11,15 +11,15 @@
     "code native data pipelines"
   ],
   "license": "Apache",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
   "scripts": {
-    "build": "tsc && cp package.json ./dist/package.json && cp README.md ./dist/README.md && cp -R assets ./dist/assets",
+    "build": "npm run clean && tsc && cp package.json ./build/package.json && cp README.md ./build/README.md && cp -R assets ./build/assets",
+    "clean": "rimraf build",
     "lint": "eslint src --ext .ts --fix"
   },
   "peerDependencies": {
-    "@prisma/client": "latest",
-    "@streamdal/node-sdk": "latest"
+    "@prisma/client": "^5.11.0",
+    "@streamdal/node-sdk": "^0.2.19"
   },
   "devDependencies": {
     "@prisma/extension-accelerate": "^0.6.2",
@@ -33,6 +33,7 @@
     "lint-staged": "^15.2.0",
     "prettier": "^3.1.1",
     "prisma": "^5.7.0",
+    "rimraf": "^5.0.5",
     "typescript": "5.3.3"
   }
 }
