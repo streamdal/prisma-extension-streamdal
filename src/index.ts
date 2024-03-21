@@ -121,7 +121,7 @@ export const streamdalExtension = (streamdalConfigs?: StreamdalConfigs) => {
             streamdalAudience ?? {
               serviceName: streamdal?.configs.serviceName,
               componentName: "prisma-db",
-              operationType: OperationType.PRODUCER,
+              operationType: OperationType.CONSUMER,
               operationName: `findFirst-${ctx.$name}`,
             },
           );
@@ -144,7 +144,7 @@ export const streamdalExtension = (streamdalConfigs?: StreamdalConfigs) => {
             streamdalAudience ?? {
               serviceName: streamdal?.configs.serviceName,
               componentName: "prisma-db",
-              operationType: OperationType.PRODUCER,
+              operationType: OperationType.CONSUMER,
               operationName: `findFirstOrThrow-${ctx.$name}`,
             },
           );
@@ -170,7 +170,7 @@ export const streamdalExtension = (streamdalConfigs?: StreamdalConfigs) => {
                 streamdalAudience ?? {
                   serviceName: streamdal?.configs.serviceName,
                   componentName: "prisma-db",
-                  operationType: OperationType.PRODUCER,
+                  operationType: OperationType.CONSUMER,
                   operationName: `findMany-${ctx.$name}`,
                 },
               ),
@@ -195,7 +195,7 @@ export const streamdalExtension = (streamdalConfigs?: StreamdalConfigs) => {
             streamdalAudience ?? {
               serviceName: streamdal?.configs.serviceName,
               componentName: "prisma-db",
-              operationType: OperationType.PRODUCER,
+              operationType: OperationType.CONSUMER,
               operationName: `findUnique-${ctx.$name}`,
             },
           );
@@ -218,7 +218,7 @@ export const streamdalExtension = (streamdalConfigs?: StreamdalConfigs) => {
             streamdalAudience ?? {
               serviceName: streamdal?.configs.serviceName,
               componentName: "prisma-db",
-              operationType: OperationType.PRODUCER,
+              operationType: OperationType.CONSUMER,
               operationName: `findUniqueOrThrow-${ctx.$name}`,
             },
           );
